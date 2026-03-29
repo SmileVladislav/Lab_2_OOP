@@ -2,10 +2,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TestMain {
+
     @Test
     void testStandard() {
         String input = "Аліса мила раму.";
-        assertEquals(" му.", Main.processText(input, 'А', 'а'));
+        assertEquals("му.", Main.processText(input, 'А', 'а'));
     }
 
     @Test
@@ -21,8 +22,15 @@ class TestMain {
 
     @Test
     void testMultipleSentences() {
-        String input = "Перше речення. Друге речення.";
-        String result = Main.processText(input, 'е', 'е');
-        assertNotEquals(input, result);
+        String input = "Мама мила. Тато мив.";
+        String result = Main.processText(input, 'а', 'а');
+        assertEquals("М. Тато мив.", result);
+    }
+
+    @Test
+    void testPreserveFormatting() {
+        String input = "Перше речення.\nДруге речення.";
+        String result = Main.processText(input, 'x', 'y');
+        assertEquals(input, result);
     }
 }
