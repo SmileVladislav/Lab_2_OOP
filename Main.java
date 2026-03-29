@@ -1,24 +1,40 @@
-import java.util.Scanner;
-
+/**
+ * Клас для обробки тексту: видалення підрядка між першим та останнім заданими символами.
+ * @author SmileVladislav
+ */
 public class Main {
+    /**
+     * Головний метод, де ми перевіряємо логіку на уривку з "Шерлока Холмса".
+     */
     public static void main(String[] args) {
         try {
-            String text = "Ми зустрілися наступного дня, як і було домовлено, і оглянули помешкання на Бейкер-стріт, номер двісті двадцять один б, про яке він говорив під час нашої першої зустрічі. Воно складалося з двох зручних спалень і однієї простої, але просторої вітальні, затишно вмебльованої і освітленої двома великими вікнами. Кімнати були чисті, світлі, а ціна, поділена на двох, виявилася настільки помірною, що ми того ж вечора домовилися про оренду і негайно перевезли свої речі. Холмс не був людиною, з якою важко жити під одним дахом; він мав тихі звички і регулярний розпорядок дня. Його енергія була неймовірною, коли на нього находив робочий запал, але час від часу він міг цілими днями лежати на канапі у вітальні, не вимовляючи ні слова і ледь ворушачись.";
+            String text = "Ми зустрілися наступного дня, як і було домовлено.\n" +
+                    "Воно складалося з двох зручних спалень і вітальні.";
+
             char startChar = 'а';
             char endChar = 'и';
 
             if (text == null || text.isEmpty()) {
-                throw new IllegalArgumentException("Текст порожній");
+                throw new IllegalArgumentException("Текст не може бути порожнім");
             }
 
+            System.out.println("Результат обробки тексту");
             System.out.println(processText(text, startChar, endChar));
+
         } catch (Exception e) {
             System.err.println("Помилка: " + e.getMessage());
         }
     }
 
+    /**
+     * Розбиває текст на речення, зберігаючи оригінальні роздільники (пробіли, переноси).
+     * * @param text вхідний текст
+     * @param start початковий символ для видалення
+     * @param end кінцевий символ для видалення
+     * @return оброблений текст із збереженим форматуванням
+     */
     public static String processText(String text, char start, char end) {
-        String[] sentences = text.split("(?<=[.!?])\\s*");
+        String[] sentences = text.split("(?<=[.!?])");
         StringBuilder finalResult = new StringBuilder();
 
         for (String sentence : sentences) {
@@ -27,11 +43,11 @@ public class Main {
 
             if (first != -1 && last != -1 && first < last) {
                 String processed = sentence.substring(0, first) + sentence.substring(last + 1);
-                finalResult.append(processed).append(" ");
+                finalResult.append(processed);
             } else {
-                finalResult.append(sentence).append(" ");
+                finalResult.append(sentence);
             }
         }
-        return finalResult.toString().trim();
+        return finalResult.toString();
     }
 }
